@@ -3,7 +3,7 @@
 Provides functionality for interactive with EUbScarab database, as well as useful ingest and aggregation functions
 
 """
-
+import getpass
 import pandas as pd
 import mysql.connector
 from mysql.connector import errorcode
@@ -16,11 +16,13 @@ import HGNC
 class EUbSCARABdb:
     """A class providing connectivity to EUbScarab database"""
     def __init__(self):
+        user='bmarsden'
+        p=getpass.getpass(prompt=f'Password for account {user}: ', stream=None)
         try:
             self.mydb = mysql.connector.connect(
                 host="demeter.sgc.ox.ac.uk",
-                user="bmarsden",
-                password="hgcab5h"
+                user=user,
+                password=p
             )
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
